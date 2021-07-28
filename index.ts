@@ -1,5 +1,6 @@
-import express from 'express';
+const express = require('express');
 
+const db = require('./db');
 const app = express();
 
 const port = 3000;
@@ -22,7 +23,8 @@ app.post('/api/moves', function(req, res) {
 
 // Initialize new game
 // Should specify gameId
-app.post('/api/games', function(req, res) {
+app.post('/api/games/create', function(req, res) {
+  let {body} = req;
     // Check to see if gameId exists already. If it does, return an error.
     // If gameId is available, create a new game in our DB
 
@@ -33,13 +35,13 @@ app.post('/api/games', function(req, res) {
         let suits = [ '♠', '♣', '♦', '♥'];
         let values = [ 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2 ];
         let deck : string[] = [];
-      
+
         suits.forEach(function(suit) {
           values.forEach(function(value) {
             deck.push(value + suit);
           });
         });
-      
+
         return deck;
     };
 
@@ -49,7 +51,7 @@ app.post('/api/games', function(req, res) {
         for (let i = 0; i < deck.length; i++) {
           availableIndices.push(i);
         }
-      
+
         while(newDeck.length < deck.length) {
           let randomJ = Math.floor(Math.random() * (availableIndices.length));
           let randomI = availableIndices[randomJ];
@@ -61,12 +63,25 @@ app.post('/api/games', function(req, res) {
       };
 
     let deck = shuffleDeck(orderedDeck());
-    console.log(deck);
-      
+    let hands:any = [];
+    hands.push(deck.slice(0, 13));
+    hands.push(deck.slice(13, 26));
+    hands.push(deck.slice(26, 39));
+    hands.push(deck.slice(39, 52));
+    console.log(hands);
+
+    db.Game.create({game_id: body.game_id, hands: hands});
+
     // Split deck into 2-4 hands of 13 cards
     // Assign player 0 (starter) to player with lowest card/previous winner (??)
     res.sendStatus(201);
     return;
+});
+
+// Join a game
+app.post('/api/games/join', function(req, res) {
+  res.sendStatus(201);
+  return;
 });
 
 app.listen(port, () => {
