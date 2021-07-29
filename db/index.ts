@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/thirteen', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost/blackjack', {useNewUrlParser: true, useUnifiedTopology: true});
 
 mongoose.connection.on('Error connecting to MongoDB', console.error.bind(console, 'connection error'));
 mongoose.connection.once('open', function() {
@@ -8,8 +8,8 @@ mongoose.connection.once('open', function() {
 });
 
 let moveSchema = new mongoose.Schema({
-  move_type: {type: String, required: true},
-  cards_played: {type: Array, required: true},
+  move_type: {type: String, required: true, enum: ['hit', 'stand']},
+  // cards_played: {type: Array, required: true},
   played_by: {type: Number, required: true}
 });
 let Move = mongoose.model('Move', moveSchema);
@@ -21,9 +21,11 @@ let User = mongoose.model('User', userSchema);
 
 let gameSchema = new mongoose.Schema({
   game_id: {type: String, required: true, unique: true},
-  hands: {type: Array, required: true},
-  lastMove: {type: moveSchema},
-  players: [userSchema]
+  started: {type: Boolean, default: false},
+  hands: {type: Array},
+  // lastMove: {type: moveSchema},
+  players: {type: Array},
+  current_turn: {type: Number}
 });
 let Game = mongoose.model('Game', gameSchema);
 
