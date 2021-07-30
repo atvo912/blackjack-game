@@ -7,6 +7,10 @@ const port = 3000;
 
 app.use(express.json());
 
+function evaluateHand(hand: string[]): string {
+  return 'hello';
+}
+
 // Get current gamestate
 // Req must provide gameId and playerId
 app.get('/api/games/state', function(req, res) {
@@ -21,8 +25,11 @@ app.get('/api/games/state', function(req, res) {
       if (!data) {
         throw data;
       }
+      let resultModified = data;
+      resultModified.hands[0][1] = 'hidden';
       console.log(data);
-      res.json(data);
+      res.json(resultModified);
+
     })
     .catch((err) => {
       console.error(err);
@@ -147,7 +154,7 @@ app.post('/api/games/start', function(req, res) {
         }
       }
       console.log(hands);
-      return db.Game.findOneAndUpdate({game_id: game_id}, {'$set': {started: true, hands: hands}}, {new: true});
+      return db.Game.findOneAndUpdate({game_id: game_id}, {'$set': {started: true, hands: hands, current_turn: 0}}, {new: true});
     } else {
       console.error('Game already started');
       throw new Error('Game already started');
