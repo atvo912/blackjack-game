@@ -15,7 +15,9 @@ let moveSchema = new mongoose.Schema({
 let Move = mongoose.model('Move', moveSchema);
 
 let userSchema = new mongoose.Schema({
-  user_id: {type: String, required: true, unique: true}
+  user_id: {type: String, required: true, unique: true},
+  wins: {type: Number, required: true, default: 0},
+  losses: {type: Number, required: true, default: 0}
 });
 let User = mongoose.model('User', userSchema);
 
