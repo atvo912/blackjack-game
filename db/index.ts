@@ -24,6 +24,7 @@ let User = mongoose.model('User', userSchema);
 let gameSchema = new mongoose.Schema({
   game_id: {type: String, required: true, unique: true},
   started: {type: Boolean, default: false},
+  deck: {type: Array},
   hands: {type: Array},
   // lastMove: {type: moveSchema},
   players: {type: Array},
