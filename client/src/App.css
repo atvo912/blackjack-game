@@ -13,8 +13,9 @@
 }
 
 #table {
-  background-color: green;
+  background-color: #102A43;
   height: 690px;
+  color: white;
 }
 
 #play-buttons {

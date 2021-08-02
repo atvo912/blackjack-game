@@ -42,18 +42,41 @@ const dummyStartedGame = {
   "current_turn": 0
 };
 
+
+
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('set-username');
+  const [currentView, setCurrentView] = useState('set-user');
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState('');
-  const [gameId, setGameId] = useState('');
+  const [gameId, setGameId] = useState('TAI#69');
   const [gameState, setGameState] = useState(dummyStartedGame);
+
+  const findGame = (game_id:string) => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/api/games/state',
+      headers: { 'game_id': game_id }
+    })
+    .then((res) => {
+      console.log(res);
+      setGameId(game_id);
+      setCurrentView('game');
+      setGameState(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  };
+
+  const createGame = () => {
+
+  };
 
   return (
     <div className="App">
       <b>NOTE:</b> You must set your username before you can play
       <MenuButtons />
-      <Table />
+      <Table gameId = {gameId} username = {username} currentView = {currentView} setCurrentView = {setCurrentView} setUsername = {setUsername} gameState = {gameState} findGame = {findGame}/>
       <PlayButtons />
     </div>
   );
