@@ -1,7 +1,7 @@
 {
-  "name": "thirteen-game-api",
+  "name": "blackjack-game-api",
   "version": "1.0.0",
-  "description": "Backend API for browser-based card game of Thirteen/Tien Len/Heo",
+  "description": "Backend API for browser-based card game of Blackjack",
   "main": "index.js",
   "scripts": {
     "build": "tsc",

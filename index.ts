@@ -56,7 +56,7 @@ function evaluateHand(hand: string[]): number[] {
     output.push(staticCount);
   }
 
-  console.log(staticCount, aceCount);
+  // console.log(staticCount, aceCount);
   return output;
 }
 
@@ -148,8 +148,9 @@ app.put('/api/games/move', function(req, res) {
     })
     .then((result) => {
       // has everyone taken their turn?
-      let {hands} = result;
+      let {hands, deck, players} = result;
       if (result.current_turn <= result.players.length - 1) {
+        // if people still have to take their turns, just proceed
         return result;
       } else {
         // automate the dealer plays
@@ -159,25 +160,96 @@ app.put('/api/games/move', function(req, res) {
         // evaluate dealer hand
         console.log(result);
 
-        // let possibleValues = evaluateHand(hands[0]);
+        let dealerPossibleValues = evaluateHand(hands[0]);
+
+        // console.log('dealerPossibleValues: ', dealerPossibleValues, 'highestValue: ', dealerPossibleValues[dealerPossibleValues.length -1]);
+
+        while (dealerPossibleValues[dealerPossibleValues.length - 1] <= 16) {
+          // hit if hand is <= 16
+          hands[0].push(deck.pop());
+          console.log('Dealer hand new:',hands[0]);
+          dealerPossibleValues = evaluateHand(hands[0]);
+        }
+
+        // stand otherwise
+        // compare dealer's hand with all non-busters
+
+        for (let i = 1; i < hands.length; i++) {
+          let playerPossibleValues = evaluateHand(hands[i]);
+          let hasBusted = true;
+          let current_user_id = players[i - 1].user_id;
+
+          // for all players, determine if they have busted
+          for (let j = 0; j < playerPossibleValues.length; j++) {
+            if (playerPossibleValues[j] <= 21) {
+              hasBusted = false;
+            }
+          }
+
+          // if the player has busted, we don't bother
+          if (hasBusted) {
+            continue;
+          } else {
+            // if the player hasn't busted, we compare hands
+            console.log(`Compare these value-sets (Dealer, ${current_user_id}):`, dealerPossibleValues, playerPossibleValues);
+            let dealerBest = 0;
+            let playerBest = 0;
+
+            for (let i = 0; i < dealerPossibleValues.length; i++) {
+              if (dealerPossibleValues[i] <= 21) {
+                dealerBest = dealerPossibleValues[i];
+              }
+            };
+
+            for (let i = 0; i < playerPossibleValues.length; i++) {
+              if (playerPossibleValues[i] <= 21) {
+                playerBest = playerPossibleValues[i];
+              }
+            };
+            console.log(`Compare these values (Dealer, ${current_user_id}):`, dealerBest, playerBest);
+            console.log('Current player: ', players[i - 1]);
+
+            // if playerBest > dealerBest, player wins
+            // if dealer busted, their best should be 0 & non-busting player should win
+            if (playerBest > dealerBest) {
+              players[i - 1].wins += 1;
+            } else if (dealerBest > playerBest) {
+              // if dealerBest > playerBest, player loses
+              players[i - 1].losses += 1;
+            } else {
+              // if dealerBest === playerBest, no W/L counted
+              console.log('tie');
+            }
+
+            console.log('players updated: ', players);
+          }
+        }
+
         // // if dealer's hand >= 17, stand
         // if (possibleValues[-1] >= 17) {
         //   // stand
         // } else {
         //   // if dealer's hand <= 16, hit
+        //   hands[0].push(deck.pop());
         // }
 
-        return result;
+        // return result;
+        return db.Game.findOneAndUpdate({game_id: game_id}, {$set: {deck: deck, hands: hands, players: players, started: false}, $inc: {current_turn: 0}}, {new: true})
+        // .then(() => {
+        //   return db.Game.findOneAndUpdate({'players.user_id': user_id}, {$inc: {'players.$.losses': 1}}, {new: true});
+        // })
       }
     })
     .then((result) => {
       if (!result) {
         throw result;
       }
-      // let resultModified = result;
-      // // let resultModified = extend({}, result);
-      // resultModified.hands[0][1] = 'hidden';
-      // resultModified.deck = [];
+      // return unmodified result if game is over
+      if (!result.started) {
+        console.log(result);
+        res.json(result);
+        return;
+      }
       let resultModified:any = modifyResult(result);
       console.log(result);
       res.json(resultModified);
@@ -196,8 +268,17 @@ app.post('/api/games/create', function(req, res) {
   let {body} = req;
     // Check to see if gameId exists already. If it does, return an error.
     // If gameId is available, create a new game in our DB
-    db.Game.create({game_id: body.game_id});
-    res.sendStatus(201);
+    db.Game.create({game_id: body.game_id})
+    .then((result) => {
+      if (!result) {
+        throw new Error('New game not created');
+      }
+      res.json(result);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(400);
+    })
     return;
 });
 
@@ -237,6 +318,49 @@ app.post('/api/games/join', function(req, res) {
   })
   return;
 });
+
+// LEAVE
+
+// Leave a game
+app.delete('/api/games/leave', function(req, res) {
+  let {game_id, user_id} = req.body;
+  console.log(game_id, user_id);
+  db.Game.findOne({game_id: game_id})
+  .then((result) => {
+    let playerNames:string[] = result.players.map((playerObj) => playerObj['user_id']);
+    let isPlayerThere = playerNames.includes(user_id);
+
+    if (isPlayerThere) {
+      console.log('player should be removed');
+      return db.Game.findOneAndUpdate({game_id: game_id}, {$pull: {players: {user_id: user_id}}}, {new: true});
+
+    } else {
+      throw new Error('Player could not be removed');
+    }
+  })
+  .then((result) => {
+    // if the last player has left the game, delete the game
+    if (result.players.length === 0) {
+      return db.Game.deleteOne({game_id: game_id});
+    } else {
+      return result;
+    }
+  })
+  .then((result) => {
+    console.log(result);
+    res.json(result);
+    if (!result) {
+      throw result;
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.sendStatus(400);
+  })
+  return;
+});
+
+// LEAVE
 
 // START a game once everyone is in lobby
 app.post('/api/games/start', function(req, res) {
