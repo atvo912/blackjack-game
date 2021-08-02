@@ -1,5 +1,5 @@
 {
-  "name": "blackjack-game-api",
+  "name": "blackjack-game",
   "version": "1.0.0",
   "description": "Backend API for browser-based card game of Blackjack",
   "main": "index.js",
