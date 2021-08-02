@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "prod": "yarn build && yarn start"
   },
-  "repository": "https://github.com/atvo912/thirteen-game-API.git",
+  "repository": "https://github.com/atvo912/blackjack-game-API.git",
   "author": "atvo912 <atvo912@gmail.com>",
   "license": "MIT",
   "dependencies": {
