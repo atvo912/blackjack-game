@@ -4,6 +4,9 @@ import axios from 'axios';
 import PlayButtons from './PlayButtons';
 import MenuButtons from './MenuButtons';
 import Table from './Table';
+import Modal from './views/Modal';
+
+const rules = 'HELLO';
 
 const dummyStartedGame = {
   "started": true,
@@ -159,9 +162,10 @@ function App() {
   return (
     <div className="App">
       <b>NOTE:</b> You must set your username before you can play
+      {showRules && <Modal onCloseRequest = {() => {setShowRules(false)}}> {rules} </Modal>}
       <MenuButtons startGame = {startGame} leaveGame = {leaveGame} joinGame = {joinGame}/>
       <Table gameId = {gameId} username = {username} currentView = {currentView} setCurrentView = {setCurrentView} setUsername = {setUsername} gameState = {gameState} findGame = {findGame} createGame = {createGame} joinGame = {joinGame}/>
-      <PlayButtons playMove = {playMove} leaveGame = {leaveGame}/>
+      <PlayButtons playMove = {playMove} leaveGame = {leaveGame} setShowRules = {setShowRules}/>
     </div>
   );
 }
