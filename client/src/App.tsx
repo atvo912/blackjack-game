@@ -6,7 +6,20 @@ import MenuButtons from './MenuButtons';
 import Table from './Table';
 import Modal from './views/Modal';
 
-const rules = 'HELLO';
+const rules:string[] = [
+  '1. Set a username by enter it into the provided box and hit "Submit"',
+  '2. Create a new game or find an existing one by typing the game ID into the appropriate box',
+  '2.5. After finding an existing game, hit "Join Game" to actually join as a player',
+  '3. If the game isn\'t started, press "Start Game" to initialize the game',
+  '4. On your turn, you can choose to Hit or Stand. The goal is to reach 21 or higher without going over (i.e. going bust). \
+  Numerical cards are worth their face value. Face cards are worth 10. Aces are worth 1 or 11, depending on preference. If you go \
+  bust, your turn is over and you automatically lose.',
+  '5. Once everyone has gone, the dealer will automatically play until their hand value is 17 or greater, and then wins/losses will be evaluated.',
+  '6. Once the game is over, you can press the "Start Game" button to start a new game',
+  '7. Hit "Leave Game" to leave a game lobby. When all active players leave a game, that lobby will be closed.'
+];
+
+
 
 const dummyStartedGame = {
   "started": true,
@@ -161,8 +174,9 @@ function App() {
 
   return (
     <div className="App">
-      <b>NOTE:</b> You must set your username before you can play
-      {showRules && <Modal onCloseRequest = {() => {setShowRules(false)}}> {rules} </Modal>}
+      <b>Play Blackjack</b> with a group of up to 4 players online! <br></br>
+      Click <b>How to Play</b> below for instructions for using this page.
+      {showRules && <Modal onCloseRequest = {() => {setShowRules(false)}}> {rules.map((rule) => {return <div className = "rule-line">{rule}</div>})} </Modal>}
       <MenuButtons startGame = {startGame} leaveGame = {leaveGame} joinGame = {joinGame}/>
       <Table gameId = {gameId} username = {username} currentView = {currentView} setCurrentView = {setCurrentView} setUsername = {setUsername} gameState = {gameState} findGame = {findGame} createGame = {createGame} joinGame = {joinGame}/>
       <PlayButtons playMove = {playMove} leaveGame = {leaveGame} setShowRules = {setShowRules}/>
