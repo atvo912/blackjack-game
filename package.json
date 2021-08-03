@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "dotenv": "^10.0.0",
-    "forever": "^4.0.1"
-  }
-}
