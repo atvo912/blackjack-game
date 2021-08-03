@@ -1,0 +1,156 @@
+html, body, h2, header {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: Lato;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+body {
+  background-color: #D9D9D9;
+  color:#102A43;
+}
+
+h2 {
+  width: 100%;
+  font-size: 1.5em;
+  background-color: #102A43;
+  opacity: 0.7;
+  text-align: center;
+  color: white;
+}
+
+button {
+  background-color: #4484CE;
+  color: white;
+  font-family: Lato;
+  width: 90px;
+  height: 50px;
+}
+
+.disabled {
+  background-color: gray;
+}
+
+.how-to-play {
+  background-color: limegreen;
+}
+
+.leave-game {
+  background-color: red;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:active {
+  background-color: navy;
+}
+
+#menu-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#play-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 1em;
+  background-color: #102A43;
+  opacity: 0.7;
+  color: white;
+  text-align: center;
+}
+
+#dealer {
+  border: 1px solid white;
+  margin-bottom: 20px;
+}
+
+#players {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.player-box {
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+}
+
+.highlighted {
+  background-color: #4484CE;
+}
+
+/* The Modal (background) */
+.modal-overlay {
+  /* display: none; Hidden by default */
+  /* display will always show. The react state will take care of the display
+  by choosing to render the component or not depending on its state */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top. Can set to 9999 if paranoid about other components */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  /* animation: 'show .5s ease', */
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+
+}
+/* The Close Button */
+.close-button {
+  color: #aaa;
+  float: right;
+  /* font-size: 28px; */
+  width: 40px;
+  font-size: 2em;
+  font-weight: bold;
+}
+.close-button:hover,
+.close-button:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+}
+
+.link {
+  color: lightseagreen;
+}
