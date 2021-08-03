@@ -10,7 +10,7 @@ function Table(props:any) {
       Currently logged in as: {username}<br></br>
       TABLE VIEW: {currentView}<br></br>
       Game ID: {gameId}<br></br>
-      Game state: {JSON.stringify(gameState)}
+      {/* Game state: {JSON.stringify(gameState)} */}
       {props.currentView === 'set-user' && <SetUser setCurrentView = {setCurrentView} setUsername = {setUsername}/>}
       {props.currentView === 'join-create' && <JoinCreate findGame = {findGame} createGame = {createGame} joinGame = {joinGame}/>}
       {props.currentView === 'game' && <Game gameState = {gameState} findGame = {findGame}/>}

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import axios from 'axios';
 import PlayButtons from './PlayButtons';
@@ -16,10 +16,9 @@ const rules:string[] = [
   bust, your turn is over and you automatically lose.',
   '5. Once everyone has gone, the dealer will automatically play until their hand value is 17 or greater, and then wins/losses will be evaluated.',
   '6. Once the game is over, you can press the "Start Game" button to start a new game',
-  '7. Hit "Leave Game" to leave a game lobby. When all active players leave a game, that lobby will be closed.'
+  '7. Hit "Leave Game" to leave a game lobby. When all active players leave a game, that lobby will be closed.',
+  'NOTE: After leaving a game, it is recommended to refresh or close the page.'
 ];
-
-
 
 const dummyStartedGame = {
   "started": true,
@@ -65,7 +64,7 @@ function App() {
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState('');
   const [gameId, setGameId] = useState('');
-  const [gameState, setGameState] = useState({players: [], hands: [], current_turn: 0});
+  const [gameState, setGameState] = useState({players: [], hands: [[]], current_turn: 0});
 
   const findGame = (game_id:string) => {
     let id = game_id;

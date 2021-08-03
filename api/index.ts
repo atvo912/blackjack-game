@@ -1,10 +1,12 @@
 const express = require('express');
+const path = require('path');
 
 const db = require('./db');
 const app = express();
 
 const port = 3001;
 
+// app.use(express.static(path.join(__dirname, './client/public')));
 app.use(express.json());
 
 app.use(function(req, res, next) {
@@ -278,7 +280,7 @@ app.post('/api/games/create', function(req, res) {
     // If gameId is available, create a new game in our DB
     let newPlayer = new db.User({user_id: user_id});
 
-    db.Game.create({game_id: game_id, players: [newPlayer]})
+    db.Game.create({game_id: game_id, players: [newPlayer], hands: [[]]})
     .then((result) => {
       if (!result) {
         throw new Error('New game not created');

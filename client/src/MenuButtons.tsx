@@ -7,7 +7,7 @@ function MenuButtons(props:any) {
     <div id = "menu-buttons">
       <button onClick = {joinGame}>JOIN GAME</button>
       <button onClick = {startGame}>START GAME</button>
-      <button onClick = {leaveGame}>LEAVE GAME</button>
+      <button className = "leave-game" onClick = {leaveGame}>LEAVE GAME</button>
     </div>
   );
 }

@@ -36,6 +36,18 @@ button {
   height: 50px;
 }
 
+.disabled {
+  background-color: gray;
+}
+
+.how-to-play {
+  background-color: limegreen;
+}
+
+.leave-game {
+  background-color: red;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -87,6 +99,7 @@ footer {
 .player-box {
   display: flex;
   flex-direction: column;
+  min-width: 220px;
 }
 
 .highlighted {
@@ -131,4 +144,13 @@ footer {
 .close-button:focus {
   text-decoration: none;
   cursor: pointer;
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+}
+
+.link {
+  color: lightseagreen;
 }
