@@ -1,6 +1,12 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/blackjack', {useNewUrlParser: true, useUnifiedTopology: true});
+// LOCAL CONNECTION
+// mongoose.connect('mongodb://localhost/blackjack', {useNewUrlParser: true, useUnifiedTopology: true});
+
+// REMOTE CONNECTION
+// console.log(process.env.DB_NAME, process.env.NAME, process.env.PASS, process.env.URI);
+mongoose.connect(`mongodb://${process.env.NAME}:${process.env.PASS}@${process.env.URI}/${process.env.DB_NAME}`, {useNewUrlParser: true, useUnifiedTopology: true})
 
 mongoose.connection.on('Error connecting to MongoDB', console.error.bind(console, 'connection error'));
 mongoose.connection.once('open', function() {
