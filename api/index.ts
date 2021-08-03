@@ -273,9 +273,12 @@ app.put('/api/games/move', function(req, res) {
 // Should specify gameId
 app.post('/api/games/create', function(req, res) {
   let {body} = req;
+  let {game_id, user_id} = req.body;
     // Check to see if gameId exists already. If it does, return an error.
     // If gameId is available, create a new game in our DB
-    db.Game.create({game_id: body.game_id})
+    let newPlayer = new db.User({user_id: user_id});
+
+    db.Game.create({game_id: game_id, players: [newPlayer]})
     .then((result) => {
       if (!result) {
         throw new Error('New game not created');

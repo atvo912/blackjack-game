@@ -1,11 +1,14 @@
 import React from 'react';
 
-function PlayButtons() {
+function PlayButtons(props:any) {
+  const {playMove, leaveGame} = props;
+
   return (
     <div id = "play-buttons">
-    <button>HIT</button>
-    <button>STAND</button>
-    <button>LEAVE GAME</button>
+    <button onClick = {() => {playMove('hit')}}>HIT</button>
+    <button onClick = {() => {playMove('stand')}}>STAND</button>
+    {/* <button onClick = {leaveGame}>LEAVE GAME</button> */}
+    <button>HOW TO PLAY</button>
   </div>
   );
 }

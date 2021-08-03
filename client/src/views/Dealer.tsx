@@ -1,10 +1,10 @@
 import React from 'react';
 
 function Dealer(props:any) {
-  let {hand} = props;
+  let {hands} = props;
   return (
     <div id = "dealer">
-      DEALER CARDS: {hand}
+      DEALER CARDS: {hands[0]}
     </div>
   );
 }

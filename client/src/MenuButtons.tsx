@@ -1,12 +1,13 @@
 import React from 'react';
 
-function MenuButtons() {
+function MenuButtons(props:any) {
+  const {startGame, leaveGame, joinGame} = props;
+
   return (
     <div id = "menu-buttons">
-      <button>SET USERNAME</button>
-      <button>JOIN GAME</button>
-      <button>CREATE GAME</button>
-      <button>HOW TO PLAY</button>
+      <button onClick = {joinGame}>JOIN GAME</button>
+      <button onClick = {startGame}>START GAME</button>
+      <button onClick = {leaveGame}>LEAVE GAME</button>
     </div>
   );
 }
