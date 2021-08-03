@@ -1,6 +1,11 @@
-# Getting Started with Create React App
+# blackjack-game/client/
+This is the front-end application for the Blackjack game, built with React.js and TypeScript.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In order to build the front-end, navigate into the /client folder and run 'yarn build', and then the folders will be compiled into the /build directory.
+
+'yarn serve' will serve the compiled files to port 3000 by default.
+
+The 'yarn prod' script builds the application *and* serves it to port 3000.
 
 ## Available Scripts
 
