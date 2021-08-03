@@ -88,3 +88,7 @@ footer {
   display: flex;
   flex-direction: column;
 }
+
+.highlighted {
+  background-color: #4484CE;
+}

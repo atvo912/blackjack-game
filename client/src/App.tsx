@@ -49,7 +49,7 @@ function App() {
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState('');
   const [gameId, setGameId] = useState('');
-  const [gameState, setGameState] = useState({players: [], hands: []});
+  const [gameState, setGameState] = useState({players: [], hands: [], current_turn: 0});
 
   const findGame = (game_id:string) => {
     let id = game_id;

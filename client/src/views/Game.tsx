@@ -17,7 +17,7 @@ function Game(props:any) {
       GAME
       <Dealer hands = {hands}/>
       <div id = "players">
-      {players.map((player: any, idx: number) => <Player hands = {hands} players = {players} idx = {idx}/>)}
+      {players.map((player: any, idx: number) => <Player hands = {hands} players = {players} idx = {idx} isHighlighted = {idx === gameState.current_turn}/>)}
       {/* <Player hands = {hands} players = {players} idx = {0}/>
       <Player hands = {hands} players = {players} idx = {1}/>
       <Player hands = {hands} players = {players} idx = {2}/>
