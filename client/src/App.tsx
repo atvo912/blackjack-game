@@ -60,6 +60,8 @@ const dummyStartedGame = {
 
 
 function App() {
+  let uri = process.env.REACT_APP_URI || 'localhost:3001';
+  // console.log(uri);
   const [currentView, setCurrentView] = useState('set-user');
   const [showRules, setShowRules] = useState(false);
   const [username, setUsername] = useState('');
@@ -73,7 +75,7 @@ function App() {
     }
     axios({
       method: 'get',
-      url: 'http://localhost:3001/api/games/state',
+      url: `http://${uri}/api/games/state`,
       headers: { 'game_id': id }
     })
     .then((res) => {
@@ -94,7 +96,7 @@ function App() {
     }
     axios({
       method: 'post',
-      url: 'http://localhost:3001/api/games/join',
+      url: `http://${uri}/api/games/join`,
       data: { 'game_id': gameId, user_id: username}
     })
     .then((res) => {
@@ -111,7 +113,7 @@ function App() {
   const createGame = (game_id:string) => {
     axios({
       method: 'post',
-      url: 'http://localhost:3001/api/games/create',
+      url: `http://${uri}/api/games/create`,
       data: { 'game_id': game_id, user_id: username}
     })
     .then((res) => {
@@ -128,7 +130,7 @@ function App() {
   const startGame = () => {
     axios({
       method: 'post',
-      url: 'http://localhost:3001/api/games/start',
+      url: `http://${uri}/api/games/start`,
       data: { 'game_id': gameId}
     })
     .then((res) => {
@@ -143,7 +145,7 @@ function App() {
   const playMove = (move:string) => {
     axios({
       method: 'put',
-      url: 'http://localhost:3001/api/games/move',
+      url: `http://${uri}/api/games/move`,
       data: { 'game_id': gameId, user_id: username, move: move}
     })
     .then((res) => {
@@ -158,7 +160,7 @@ function App() {
   const leaveGame = () => {
     axios({
       method: 'delete',
-      url: 'http://localhost:3001/api/games/leave',
+      url: `http://${uri}/api/games/leave`,
       data: { 'game_id': gameId, user_id: username}
     })
     .then((res) => {
