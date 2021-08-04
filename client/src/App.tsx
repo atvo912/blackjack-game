@@ -15,7 +15,7 @@ const rules:string[] = [
   Numerical cards are worth their face value. Face cards are worth 10. Aces are worth 1 or 11, depending on preference. If you go \
   bust, your turn is over and you automatically lose.',
   '5. Once everyone has gone, the dealer will automatically play until their hand value is 17 or greater, and then wins/losses will be evaluated.',
-  '6. Once the game is over, you can press the "Start Game" button to start a new game',
+  '6. Once the game is over, you can press the "Restart Game" button to start a new game',
   '7. Hit "Leave Game" to leave a game lobby. When all active players leave a game, that lobby will be closed.',
   'NOTE: After leaving a game, it is recommended to refresh or close the page.'
 ];
