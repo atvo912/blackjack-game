@@ -70,7 +70,7 @@ function App() {
 
   const findGame = (game_id:string) => {
     let id = game_id;
-    if (game_id == undefined) {
+    if (game_id === undefined) {
       id = gameId;
     }
     axios({
@@ -89,9 +89,29 @@ function App() {
     })
   };
 
+  const findGameNoUpdate = (game_id:string) => {
+    let id = game_id;
+    if (game_id === undefined) {
+      id = gameId;
+    }
+    axios({
+      method: 'get',
+      url: `http://${uri}/api/games/state`,
+      headers: { 'game_id': id }
+    })
+    .then((res) => {
+      console.log(res);
+      setGameId(id);
+      setGameState(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  };
+
   const joinGame = (game_id:string) => {
     let id = game_id;
-    if (game_id == undefined) {
+    if (game_id === undefined) {
       id = gameId;
     }
     axios({
@@ -170,6 +190,8 @@ function App() {
     })
     .catch((err) => {
       console.error(err);
+      setCurrentView('join-create');
+      setGameId('');
     })
   };
 
@@ -178,9 +200,9 @@ function App() {
       <b>Play Blackjack</b> with a group of up to 4 players online! <br></br>
       Click <b>How to Play</b> below for instructions for using this page.
       {showRules && <Modal onCloseRequest = {() => {setShowRules(false)}}> {rules.map((rule) => {return <div className = "rule-line">{rule}</div>})} </Modal>}
-      <MenuButtons startGame = {startGame} leaveGame = {leaveGame} joinGame = {joinGame}/>
-      <Table gameId = {gameId} username = {username} currentView = {currentView} setCurrentView = {setCurrentView} setUsername = {setUsername} gameState = {gameState} findGame = {findGame} createGame = {createGame} joinGame = {joinGame}/>
-      <PlayButtons playMove = {playMove} leaveGame = {leaveGame} setShowRules = {setShowRules}/>
+      <MenuButtons startGame = {startGame} leaveGame = {leaveGame} joinGame = {joinGame} currentView = {currentView} gameState = {gameState}/>
+      <Table gameId = {gameId} username = {username} currentView = {currentView} setCurrentView = {setCurrentView} setUsername = {setUsername} gameState = {gameState} findGame = {findGame} findGameNoUpdate = {findGameNoUpdate} createGame = {createGame} joinGame = {joinGame}/>
+      <PlayButtons playMove = {playMove} leaveGame = {leaveGame} setShowRules = {setShowRules} currentView = {currentView} gameState = {gameState} username = {username}/>
     </div>
   );
 }

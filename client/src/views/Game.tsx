@@ -3,14 +3,18 @@ import Player from './Player';
 import Dealer from './Dealer';
 
 function Game(props:any) {
-  let {gameState, findGame} = props;
+  let {gameState, findGame, currentView, findGameNoUpdate} = props;
   let {started, hands, players, game_id, current_turn} = gameState;
 
   useEffect(() => {
 
     // setInterval(() => {console.log('hello')}, 4000);
-    setInterval(() => {findGame(game_id)}, 4000);
-  }, []);
+    if (currentView === 'game') {
+      setInterval(() => {
+        findGameNoUpdate(game_id)
+      }, 4000);
+    }
+  }, [currentView]);
 
   return (
     <div id = "game">

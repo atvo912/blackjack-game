@@ -1,12 +1,17 @@
 import React from 'react';
 
 function PlayButtons(props:any) {
-  const {playMove, leaveGame, setShowRules} = props;
+  const {playMove, leaveGame, setShowRules, currentView, gameState, username} = props;
+
+  const enableHitStand = currentView === 'game' && username === gameState.players[gameState.current_turn]?.user_id;
+  // console.log('enableHitStand', enableHitStand)
 
   return (
     <div id = "play-buttons">
-    <button onClick = {() => {playMove('hit')}}>HIT</button>
-    <button onClick = {() => {playMove('stand')}}>STAND</button>
+      {enableHitStand ? <button onClick = {() => {playMove('hit')}}>HIT</button> :
+      <button onClick = {() => {playMove('hit')}} disabled>HIT</button>}
+      {enableHitStand ? <button onClick = {() => {playMove('stand')}}>STAND</button> :
+      <button onClick = {() => {playMove('stand')}} disabled>STAND</button>}
     {/* <button onClick = {leaveGame}>LEAVE GAME</button> */}
     <button className = "how-to-play" onClick = {() => {setShowRules(true)}}>HOW TO PLAY</button>
   </div>

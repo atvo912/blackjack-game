@@ -4,7 +4,7 @@ import JoinCreate from './views/JoinCreate';
 import Game from './views/Game';
 
 function Table(props:any) {
-  let {username, currentView, setCurrentView, setUsername, gameState, findGame, gameId, createGame, joinGame} = props;
+  let {username, currentView, setCurrentView, setUsername, gameState, findGame, gameId, createGame, joinGame, findGameNoUpdate} = props;
   return (
     <div id = "table">
       Currently logged in as: {username}<br></br>
@@ -13,7 +13,7 @@ function Table(props:any) {
       {/* Game state: {JSON.stringify(gameState)} */}
       {props.currentView === 'set-user' && <SetUser setCurrentView = {setCurrentView} setUsername = {setUsername}/>}
       {props.currentView === 'join-create' && <JoinCreate findGame = {findGame} createGame = {createGame} joinGame = {joinGame}/>}
-      {props.currentView === 'game' && <Game gameState = {gameState} findGame = {findGame}/>}
+      {props.currentView === 'game' && <Game gameState = {gameState} findGame = {findGame} findGameNoUpdate = {findGameNoUpdate} currentView = {currentView}/>}
     </div>
   );
 }

@@ -24,8 +24,6 @@ function Player(props:any) {
       let idx = suits.indexOf(suit);
       path = path + suitsAlpha[idx];
 
-      path = path;
-
       if (path === "AD") {
         path = "aceDiamonds";
       }
