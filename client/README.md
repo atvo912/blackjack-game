@@ -9,6 +9,8 @@ The 'yarn prod' script builds the application *and* serves it to port 3000.
 
 This repo also has ForeverJS installed. If you want to serve the file to port 3000 using ForeverJS, you need to use the command 'forever start $(which npx) serve -p 3000 -s <-full path to /build directory->'. To stop, simply run 'forever stopall'.
 
+To specify an API URI, create a .env file in the /client directory and assign it to the value REACT_APP_URI.
+
 ## Available Scripts
 
 In the project directory, you can run:
