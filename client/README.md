@@ -7,6 +7,8 @@ In order to build the front-end, navigate into the /client folder and run 'yarn 
 
 The 'yarn prod' script builds the application *and* serves it to port 3000.
 
+This repo also has ForeverJS installed. If you want to serve the file to port 3000 using ForeverJS, you need to use the command 'forever start $(which npx) serve -p 3000 -s <-full path to /build directory->'. To stop, simply run 'forever stopall'.
+
 ## Available Scripts
 
 In the project directory, you can run:
