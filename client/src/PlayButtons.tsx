@@ -1,7 +1,7 @@
 import React from 'react';
 
 function PlayButtons(props:any) {
-  const {playMove, leaveGame, setShowRules, currentView, gameState, username} = props;
+  const {playMove, leaveGame, setShowRules, setShowTech, currentView, gameState, username} = props;
 
   const enableHitStand = currentView === 'game' && username === gameState.players[gameState.current_turn]?.user_id;
   // console.log('enableHitStand', enableHitStand)
@@ -14,6 +14,7 @@ function PlayButtons(props:any) {
       <button onClick = {() => {playMove('stand')}} disabled>STAND</button>}
     {/* <button onClick = {leaveGame}>LEAVE GAME</button> */}
     <button className = "how-to-play" onClick = {() => {setShowRules(true)}}>HOW TO PLAY</button>
+    <button className = "about-tech" onClick = {() => {setShowTech(true)}}>ABOUT THE TECH</button>
   </div>
   );
 }

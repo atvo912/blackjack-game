@@ -20,6 +20,15 @@ const rules:string[] = [
   'NOTE: After leaving a game, it is recommended to refresh or close the page.'
 ];
 
+const techs:string[] = [
+  '• The entire project (API and front-end) was written in TypeScript',
+  '• The front-end application was built in ReactJS (along with HTML and CSS)',
+  '• Game state data is stored using MongoDB, accessed via MongooseJS',
+  '• The server is a Node.js server using Express for routing',
+  '• Front-end service and API service are both using ForeverJS for server persistence',
+  '• Mongo DBMS, Node server, and front-end service are all deployed to AWS EC2 instances'
+]
+
 const dummyStartedGame = {
   "started": true,
   "deck": [],
@@ -64,6 +73,7 @@ function App() {
   // console.log(uri);
   const [currentView, setCurrentView] = useState('set-user');
   const [showRules, setShowRules] = useState(false);
+  const [showTech, setShowTech] = useState(false);
   const [username, setUsername] = useState('');
   const [gameId, setGameId] = useState('');
   const [gameState, setGameState] = useState({players: [], hands: [[]], current_turn: 0});
@@ -198,11 +208,13 @@ function App() {
   return (
     <div className="App">
       <b>Play Blackjack</b> with a group of up to 4 players online! <br></br>
-      Click <b>How to Play</b> below for instructions for using this page.
+      Click <b>How to Play</b> below for instructions for using this page.<br></br>
+      Click <b>About the Tech</b> to get a description of what technologies were used to create/deploy this application.
       {showRules && <Modal onCloseRequest = {() => {setShowRules(false)}}> {rules.map((rule) => {return <div className = "rule-line">{rule}</div>})} </Modal>}
+      {showTech && <Modal onCloseRequest = {() => {setShowTech(false)}}> {techs.map((tech) => {return <div className = "rule-line">{tech}</div>})} </Modal>}
       <MenuButtons startGame = {startGame} leaveGame = {leaveGame} joinGame = {joinGame} currentView = {currentView} gameState = {gameState}/>
       <Table gameId = {gameId} username = {username} currentView = {currentView} setCurrentView = {setCurrentView} setUsername = {setUsername} gameState = {gameState} findGame = {findGame} findGameNoUpdate = {findGameNoUpdate} createGame = {createGame} joinGame = {joinGame}/>
-      <PlayButtons playMove = {playMove} leaveGame = {leaveGame} setShowRules = {setShowRules} currentView = {currentView} gameState = {gameState} username = {username}/>
+      <PlayButtons playMove = {playMove} leaveGame = {leaveGame} setShowRules = {setShowRules} setShowTech = {setShowTech} currentView = {currentView} gameState = {gameState} username = {username}/>
     </div>
   );
 }
